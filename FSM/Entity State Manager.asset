@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d29945ea1c40563468fe5a70b1c48380, type: 3}
+  m_Name: Entity State Manager
+  m_EditorClassIdentifier: 
+  states:
+  - name: State
+    fields:
+    - name: age
+      fieldType: 1
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      layerMaskValue:
+        serializedVersion: 2
+        m_Bits: 0
+      unityObjectValue: {fileID: 0}
+    - name: fixedAge
+      fieldType: 1
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      layerMaskValue:
+        serializedVersion: 2
+        m_Bits: 0
+      unityObjectValue: {fileID: 0}
+  - name: ControllerMoveState
+    fields:
+    - name: age
+      fieldType: 1
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      layerMaskValue:
+        serializedVersion: 2
+        m_Bits: 0
+      unityObjectValue: {fileID: 0}
+    - name: fixedAge
+      fieldType: 1
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      layerMaskValue:
+        serializedVersion: 2
+        m_Bits: 0
+      unityObjectValue: {fileID: 0}
+    - name: moveSpeed
+      fieldType: 1
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      layerMaskValue:
+        serializedVersion: 2
+        m_Bits: 0
+      unityObjectValue: {fileID: 0}
+    - name: canJump
+      fieldType: 3
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      layerMaskValue:
+        serializedVersion: 2
+        m_Bits: 0
+      unityObjectValue: {fileID: 0}
+  - name: BulletHellState
+    fields:
+    - name: age
+      fieldType: 1
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      layerMaskValue:
+        serializedVersion: 2
+        m_Bits: 0
+      unityObjectValue: {fileID: 0}
+    - name: fixedAge
+      fieldType: 1
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      stringValue: 
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+      layerMaskValue:
+        serializedVersion: 2
+        m_Bits: 0
+      unityObjectValue: {fileID: 0}
