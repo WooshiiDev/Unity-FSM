@@ -2,7 +2,7 @@
 
 namespace FSM
 {
-    public class EntityStateMachine : MonoBehaviour
+    public class StateMachine : MonoBehaviour
     {
         public bool isRunning = true;
 
@@ -83,15 +83,15 @@ namespace FSM
         /// <summary>
         /// Set a new state to the instance
         /// </summary>
-        /// <param name="_state"></param>
-        public void SetState(State _state)
+        /// <param name="state"></param>
+        public void SetState(State state)
         {
             if (!isRunning)
             {
                 return;
             }
 
-            if (_state == null)
+            if (state == null)
             {
                 Debug.LogError ("Cannot set null state");
                 return;
@@ -105,7 +105,7 @@ namespace FSM
             m_previousState = m_currentState;
             
             // Update State
-            m_currentState = _state;
+            m_currentState = state;
             m_currentState.SetParent(this);
             m_currentState.OnEnter ();
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using FSM;
 using UnityEngine;
 
 namespace FSM
@@ -10,7 +9,7 @@ namespace FSM
     public class State
     {
         // Connection to main GameObject
-        private EntityStateMachine parent;
+        private StateMachine parent;
 
         //Timers 
         public float age;
@@ -20,7 +19,7 @@ namespace FSM
         {
             if (Application.isPlaying)
             {
-                EntityStateManager.SetStateValues (this);
+                StateManager.SetStateValues (this);
             }
         }
 
@@ -76,7 +75,7 @@ namespace FSM
         /// Set the parent of this state
         /// </summary>
         /// <param name="parent">The state parent</param>
-        public void SetParent(EntityStateMachine parent)
+        public void SetParent(StateMachine parent)
         {
             this.parent = parent;
         }

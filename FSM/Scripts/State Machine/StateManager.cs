@@ -67,7 +67,7 @@ namespace FSM
         {
             info = _info;
             type = _type;
-            fieldType = GetFieldType();
+            fieldType = GetFieldType ();
         }
 
         public void SetValue(object instance)
@@ -169,7 +169,7 @@ namespace FSM
     }
 
     [CreateAssetMenu ()]
-    public class EntityStateManager : ScriptableObject, ISerializationCallbackReceiver
+    public class StateManager : ScriptableObject, ISerializationCallbackReceiver
     {
         // Reflection Flags
         private const BindingFlags REFLECTION_FLAGS = BindingFlags.Public | BindingFlags.Instance;
@@ -253,7 +253,7 @@ namespace FSM
                 if (states[i].stateType == null)
                 {
                     states.RemoveAt (i);
-                    i--; 
+                    i--;
                 }
             }
         }

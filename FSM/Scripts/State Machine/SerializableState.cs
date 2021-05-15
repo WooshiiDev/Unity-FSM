@@ -28,10 +28,10 @@ namespace FSM
         /// <summary>
         /// Set the name of the state to be assigned. Should only really be needed from the editor
         /// </summary>
-        /// <param name="_name">The full name of the state</param>
-        public void SetStateName(string _name)
+        /// <param name="name">The full name of the state</param>
+        public void SetStateName(string name)
         {
-            m_stateName = _name;
+            m_stateName = name;
         }
     }
 }

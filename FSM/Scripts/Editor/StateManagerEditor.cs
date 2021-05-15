@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditorInternal;
@@ -9,8 +8,8 @@ using Object = UnityEngine.Object;
 namespace FSM.Editors
 {
     //TODO: Better lookup for states, catergories are setup painfully bad
-    [CustomEditor (typeof (EntityStateManager))]
-    public class EntityStateManagerEditor : Editor
+    [CustomEditor (typeof (StateManager))]
+    public class StateManagerEditor : Editor
     {
         // --- Static Data ---
         private static StateInfo[] states;      //Editor States
@@ -30,11 +29,11 @@ namespace FSM.Editors
         private Dictionary<string, StateInfo> stateCollection;
 
         // --- Target ---
-        private static EntityStateManager Target;
+        private static StateManager Target;
 
         private void OnEnable()
         {
-            Target = target as EntityStateManager;
+            Target = target as StateManager;
             Initialize ();
         }
 
@@ -142,14 +141,14 @@ namespace FSM.Editors
         }
 
         // State GUI
-        private void DrawState(StateInfo _state)
+        private void DrawState(StateInfo state)
         {
-            if (_state == null)
+            if (state == null)
             {
                 return;
             }
 
-            stateAsset = EditorUtil.GetAssetFromName (_state.name);
+            stateAsset = EditorUtil.GetAssetFromName (state.name);
 
             if (stateAsset == null)
             {
@@ -175,9 +174,9 @@ namespace FSM.Editors
             //Toggle for convenience
             EditorGUI.indentLevel++;
             {
-                for (int i = 0; i < _state.fields.Count; i++)
+                for (int i = 0; i < state.fields.Count; i++)
                 {
-                    StateFieldInfo field = _state.fields[i];
+                    StateFieldInfo field = state.fields[i];
                     string name = field.info.DeclaringType.Name;
 
                     // Draw based on what the declaring type is
@@ -207,7 +206,7 @@ namespace FSM.Editors
                         names.Add (name);
                     }
 
-                    DrawField (_state.fields[i]);
+                    DrawField (state.fields[i]);
                 }
 
                 EditorGUILayout.Space ();

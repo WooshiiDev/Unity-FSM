@@ -8,8 +8,8 @@ using UnityEngine;
 
 namespace FSM.Editors
 {
-    [CustomEditor (typeof (EntityStateMachine))]
-    public class EntityStateMachineEditor : Editor
+    [CustomEditor (typeof (StateMachine))]
+    public class StateMachineEditor : Editor
     {
         public struct StateName
         {
@@ -41,7 +41,7 @@ namespace FSM.Editors
         private static string[] StateNames;
 
         // Target
-        private EntityStateMachine t;
+        private StateMachine t;
 
         // Cache selection data for easier references
         private int stateIndex;
@@ -60,7 +60,7 @@ namespace FSM.Editors
 
         private void OnEnable()
         {
-            t = target as EntityStateMachine;
+            t = target as StateMachine;
 
             SetupCategories ();
 
@@ -165,9 +165,9 @@ namespace FSM.Editors
             }
         }
 
-        private void DrawStates(string[] _states)
+        private void DrawStates(string[] states)
         {
-            if (_states == null)
+            if (states == null)
             {
                 EditorGUILayout.HelpBox ("Category has no states", MessageType.Error);
                 return;
@@ -177,7 +177,7 @@ namespace FSM.Editors
 
             //int xCount = Mathf.Min (_states.Length, 3);
 
-            stateIndex = GUILayout.SelectionGrid (stateIndex, _states, 3);
+            stateIndex = GUILayout.SelectionGrid (stateIndex, states, 3);
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -209,17 +209,17 @@ namespace FSM.Editors
 
         // State GUI
 
-        private void DrawStateData(string _label, State _state, ref bool _toggle)
+        private void DrawStateData(string label, State state, ref bool toggle)
         {
-            bool isNull = _state == null;
+            bool isNull = state == null;
 
-            string stateName = isNull ? "" : GetStateName(_state.ToString());
-            float age = isNull ? 0f : _state.age;
-            float fixedAge = isNull ? 0f : _state.age;
+            string stateName = isNull ? "" : GetStateName(state.ToString());
+            float age = isNull ? 0f : state.age;
+            float fixedAge = isNull ? 0f : state.age;
 
-            _toggle = EditorGUILayout.Foldout (_toggle, _label);
+            toggle = EditorGUILayout.Foldout (toggle, label);
 
-            if (_toggle)
+            if (toggle)
             {
                 EditorGUILayout.TextField ("State Name", stateName);
 
@@ -269,29 +269,29 @@ namespace FSM.Editors
 
         // Helpers
 
-        private string GetStateName(string _stateName)
+        private string GetStateName(string stateName)
         {
-            int nameIndex = _stateName.LastIndexOf ('.');
+            int nameIndex = stateName.LastIndexOf ('.');
 
-            _stateName = _stateName.Substring (nameIndex + 1, _stateName.Length - nameIndex - 1);
+            stateName = stateName.Substring (nameIndex + 1, stateName.Length - nameIndex - 1);
 
             // Slight clean up
-            if (!_stateName.Equals("State"))
+            if (!stateName.Equals("State"))
             {
-                _stateName = _stateName.Replace ("State", "");
+                stateName = stateName.Replace ("State", "");
             }
 
-            return _stateName;
+            return stateName;
         }
 
-        private string GetGroupName(string _stateName)
+        private string GetGroupName(string stateName)
         {
-            int nameIndex = _stateName.LastIndexOf ('.');
+            int nameIndex = stateName.LastIndexOf ('.');
 
-            string category = _stateName.Substring (0, nameIndex);
+            string category = stateName.Substring (0, nameIndex);
             int categoryIndex = category.LastIndexOf ('.');
 
-            return _stateName.Substring (categoryIndex + 1, category.Length - categoryIndex - 1);
+            return stateName.Substring (categoryIndex + 1, category.Length - categoryIndex - 1);
         }
     }
 }
