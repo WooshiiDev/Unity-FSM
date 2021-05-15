@@ -11,9 +11,6 @@ namespace FSM
         // Connection to main GameObject
         protected StateMachine parent;
 
-        public float jumpHeight;
-        public float attackRange = 5;
-
         //Timers 
         public float age;
         public float fixedAge;
