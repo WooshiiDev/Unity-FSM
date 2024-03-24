@@ -219,7 +219,7 @@ namespace FSM
         #region Data Setup
 
         /// <summary>
-        /// Initalize or reset the state information
+        /// Initialize or reset the state information
         /// All data will be lost using this, use only when needed
         /// </summary>
         public void Initialize()
