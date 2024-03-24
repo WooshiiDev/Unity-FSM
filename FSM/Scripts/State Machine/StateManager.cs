@@ -55,7 +55,7 @@ namespace FSM
             this.name = info.Name;
             this.type = info.FieldType;
 
-            this.fieldType = GetFieldType ();
+            this.fieldType = GetFieldType();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace FSM
         {
             info = _info;
             type = _type;
-            fieldType = GetFieldType ();
+            fieldType = GetFieldType();
         }
 
         public void SetValue(object instance)
@@ -75,22 +75,22 @@ namespace FSM
             switch (fieldType)
             {
                 case FieldType.INT:
-                    info.SetValue (instance, intValue);
+                    info.SetValue(instance, intValue);
                     break;
                 case FieldType.FLOAT:
-                    info.SetValue (instance, floatValue);
+                    info.SetValue(instance, floatValue);
                     break;
                 case FieldType.STRING:
-                    info.SetValue (instance, stringValue);
+                    info.SetValue(instance, stringValue);
                     break;
                 case FieldType.BOOLEAN:
-                    info.SetValue (instance, boolValue);
+                    info.SetValue(instance, boolValue);
                     break;
                 case FieldType.VECTOR3:
-                    info.SetValue (instance, vector3Value);
+                    info.SetValue(instance, vector3Value);
                     break;
                 case FieldType.VECTOR2:
-                    info.SetValue (instance, vector2Value);
+                    info.SetValue(instance, vector2Value);
                     break;
                 case FieldType.UNITY:
                     if (unityObjectValue == null)
@@ -98,10 +98,10 @@ namespace FSM
                         return;
                     }
 
-                    info.SetValue (instance, unityObjectValue);
+                    info.SetValue(instance, unityObjectValue);
                     break;
                 case FieldType.OBJECT:
-                    info.SetValue (instance, objectValue);
+                    info.SetValue(instance, objectValue);
                     break;
 
             }
@@ -109,42 +109,42 @@ namespace FSM
 
         public FieldType GetFieldType()
         {
-            if (type == typeof (int))
+            if (type == typeof(int))
             {
                 return FieldType.INT;
             }
             else
-            if (type == typeof (float))
+            if (type == typeof(float))
             {
                 return FieldType.FLOAT;
             }
             else
-             if (type == typeof (string))
+             if (type == typeof(string))
             {
                 return FieldType.STRING;
             }
             else
-            if (type == typeof (bool))
+            if (type == typeof(bool))
             {
                 return FieldType.BOOLEAN;
             }
             else
-            if (type == typeof (Vector2))
+            if (type == typeof(Vector2))
             {
                 return FieldType.VECTOR2;
             }
             else
-            if (type == typeof (Vector3))
+            if (type == typeof(Vector3))
             {
                 return FieldType.VECTOR3;
             }
             else
-            if (type == typeof (LayerMask))
+            if (type == typeof(LayerMask))
             {
                 return FieldType.LAYERMASK;
             }
             else
-            if (type.IsSubclassOf (typeof (UnityEngine.Object)))
+            if (type.IsSubclassOf(typeof(UnityEngine.Object)))
             {
                 return FieldType.UNITY;
             }
@@ -159,7 +159,7 @@ namespace FSM
         public string name;
 
         public Type stateType;
-        public List<StateFieldInfo> fields = new List<StateFieldInfo> ();
+        public List<StateFieldInfo> fields = new List<StateFieldInfo>();
 
         public StateInfo(Type type)
         {
@@ -168,7 +168,7 @@ namespace FSM
         }
     }
 
-    [CreateAssetMenu ()]
+    [CreateAssetMenu()]
     public class StateManager : ScriptableObject, ISerializationCallbackReceiver
     {
         // Reflection Flags
@@ -176,7 +176,7 @@ namespace FSM
 
         // Reflection Collections
         public static Dictionary<Type, StateInfo> RegisteredStates;
-        public List<StateInfo> states = new List<StateInfo> ();
+        public List<StateInfo> states = new List<StateInfo>();
 
         // Get all types
         public static Type[] StateTypes;
@@ -185,12 +185,12 @@ namespace FSM
 
         public void OnBeforeSerialize()
         {
-            OnSerialize ();
+            OnSerialize();
         }
 
         public void OnAfterDeserialize()
         {
-            OnSerialize ();
+            OnSerialize();
         }
 
         private void OnSerialize()
@@ -198,19 +198,19 @@ namespace FSM
             //Get state types
             if (StateTypes == null)
             {
-                StateTypes = UnityReflectionUtil.GetTypesInAssembly (typeof (State));
+                StateTypes = UnityReflectionUtil.GetTypesInAssembly(typeof(State));
             }
 
             //Return if no states exist
             if (StateTypes == null || StateTypes.Length == 0)
             {
-                Debug.LogWarning ("Cannot find any state types in the project.");
+                Debug.LogWarning("Cannot find any state types in the project.");
                 return;
             }
             else
             if (RegisteredStates == null)
             {
-                Initialize ();
+                Initialize();
             }
         }
 
@@ -224,18 +224,18 @@ namespace FSM
         /// </summary>
         public void Initialize()
         {
-            RegisteredStates = new Dictionary<Type, StateInfo> ();
+            RegisteredStates = new Dictionary<Type, StateInfo>();
 
             //Iterate over states and add
             for (int i = 0; i < StateTypes.Length; i++)
             {
                 Type stateType = StateTypes[i];
-                StateInfo state = states.Find (s => s.name == stateType.Name);
+                StateInfo state = states.Find(s => s.name == stateType.Name);
 
                 if (state == null)
                 {
-                    state = new StateInfo (stateType);
-                    states.Add (state);
+                    state = new StateInfo(stateType);
+                    states.Add(state);
                 }
                 else
                 {
@@ -243,8 +243,8 @@ namespace FSM
                 }
 
 
-                CreateStateFields (state);
-                RegisteredStates.Add (stateType, state);
+                CreateStateFields(state);
+                RegisteredStates.Add(stateType, state);
             }
 
             // Clean up
@@ -252,7 +252,7 @@ namespace FSM
             {
                 if (states[i].stateType == null)
                 {
-                    states.RemoveAt (i);
+                    states.RemoveAt(i);
                     i--;
                 }
             }
@@ -265,7 +265,7 @@ namespace FSM
         {
             if (StateTypes == null)
             {
-                OnSerialize ();
+                OnSerialize();
             }
         }
 
@@ -275,7 +275,7 @@ namespace FSM
         /// <param name="state">Current state we require fields for</param>
         private void CreateStateFields(StateInfo state)
         {
-            FieldInfo[] info = state.stateType.GetFields (REFLECTION_FLAGS);
+            FieldInfo[] info = state.stateType.GetFields(REFLECTION_FLAGS);
             List<StateFieldInfo> stateFields = state.fields;
 
             //Check for invalid variables that do not exist anymore
@@ -296,7 +296,7 @@ namespace FSM
                 //If it's an invalid variable, decrement the loop and remove
                 if (!exists)
                 {
-                    stateFields.Remove (field);
+                    stateFields.Remove(field);
                     i--;
                 }
             }
@@ -316,7 +316,7 @@ namespace FSM
 
                     if (stateField.name == field.Name)
                     {
-                        stateField.UpdateInfo (field, fieldType);
+                        stateField.UpdateInfo(field, fieldType);
                         exists = true;
                         break;
                     }
@@ -328,7 +328,7 @@ namespace FSM
                 }
 
                 //Add to state fields
-                stateFields.Add (new StateFieldInfo (field));
+                stateFields.Add(new StateFieldInfo(field));
             }
 
         }
@@ -345,15 +345,15 @@ namespace FSM
         {
             if (currentState == null)
             {
-                Debug.Log ("Cannot set defaults to a state that is null!");
+                Debug.Log("Cannot set defaults to a state that is null!");
                 return;
             }
 
-            Type type = currentState.GetType ();
+            Type type = currentState.GetType();
 
-            if (!RegisteredStates.ContainsKey (type))
+            if (!RegisteredStates.ContainsKey(type))
             {
-                Debug.Log ("Cannot find state type of " + type);
+                Debug.Log("Cannot find state type of " + type);
                 return;
             }
 
@@ -361,7 +361,7 @@ namespace FSM
 
             for (int i = 0; i < fields.Count; i++)
             {
-                fields[i].SetValue (currentState);
+                fields[i].SetValue(currentState);
             }
         }
 

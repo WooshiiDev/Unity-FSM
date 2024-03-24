@@ -12,17 +12,17 @@ namespace FSM
         {
             if (string.IsNullOrEmpty(m_stateName))
             {
-                return new State ();
+                return new State();
             }
 
-            m_stateType = Type.GetType (m_stateName);
+            m_stateType = Type.GetType(m_stateName);
 
             if (m_stateType == null)
             {
                 return null;
             }
 
-            return (State)Activator.CreateInstance (m_stateType);
+            return (State)Activator.CreateInstance(m_stateType);
         }
 
         /// <summary>

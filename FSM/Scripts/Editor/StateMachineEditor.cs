@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace FSM.Editors
 {
-    [CustomEditor (typeof (StateMachine))]
+    [CustomEditor(typeof(StateMachine))]
     public class StateMachineEditor : Editor
     {
         public struct StateName
@@ -62,22 +62,22 @@ namespace FSM.Editors
         {
             t = target as StateMachine;
 
-            SetupCategories ();
+            SetupCategories();
 
             // If the machine has no state assigned (normally on creation, assign the default
             // if one exists (normally just state)
-            if (string.IsNullOrEmpty (t.SerializedState.m_stateName))
+            if (string.IsNullOrEmpty(t.SerializedState.m_stateName))
             {
                 groupIndex = 0;
                 stateIndex = 0;
             }
             else
             {
-                GetSelectionIndexes ();
+                GetSelectionIndexes();
             }
 
-            UpdateDrawnStates ();
-            UpdateSerializedState ();
+            UpdateDrawnStates();
+            UpdateSerializedState();
         }
 
         private void SetupCategories()
@@ -88,11 +88,11 @@ namespace FSM.Editors
             }
 
             // Add all states to list for lookup
-            Type[] assemblyTypes = UnityReflectionUtil.GetTypesInAssembly (typeof (State));
-            List<string> groupsTypes = new List<string> ();
+            Type[] assemblyTypes = UnityReflectionUtil.GetTypesInAssembly(typeof(State));
+            List<string> groupsTypes = new List<string>();
 
             // We only want to check once as they'll update when Unity recompiles
-            DisplayGroups = new Dictionary<string, List<StateName>> ();
+            DisplayGroups = new Dictionary<string, List<StateName>>();
 
             // Create cached arrays to have quick references
             StateNames = new string[assemblyTypes.Length];
@@ -102,66 +102,66 @@ namespace FSM.Editors
             {
                 // Get state data
                 string stateName = assemblyTypes[i].FullName;
-                string displayName = GetStateName (stateName);
+                string displayName = GetStateName(stateName);
 
-                string group = GetGroupName (stateName);
+                string group = GetGroupName(stateName);
 
-                StateName name = new StateName (stateName, displayName);
-                if (DisplayGroups.ContainsKey (group))
+                StateName name = new StateName(stateName, displayName);
+                if (DisplayGroups.ContainsKey(group))
                 {
-                    DisplayGroups[group].Add (name);
+                    DisplayGroups[group].Add(name);
                 }
                 else
                 {
-                    DisplayGroups.Add (group, new List<StateName> () { name });
+                    DisplayGroups.Add(group, new List<StateName>() { name });
                 }
 
                 StateNames[i] = stateName;
-                groupsTypes.Add (group);
+                groupsTypes.Add(group);
             }
 
-            GroupNames = groupsTypes.ToArray ();
+            GroupNames = groupsTypes.ToArray();
         }
 
         // GUI
         public override void OnInspectorGUI()
         {
-            SetupCategories ();
+            SetupCategories();
 
             // Options
-            t.isRunning = EditorGUILayout.Toggle ("Is Running", t.isRunning);
+            t.isRunning = EditorGUILayout.Toggle("Is Running", t.isRunning);
 
-            EditorGUILayout.BeginVertical (EditorStyles.helpBox);
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             {
-                EditorGUILayout.LabelField ("State Selection", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("State Selection", EditorStyles.boldLabel);
 
-                string currentState = string.Format ("Current State - {0}", t.SerializedState.m_stateName ?? "No Selected State");
-                EditorGUILayout.LabelField (currentState);
+                string currentState = string.Format("Current State - {0}", t.SerializedState.m_stateName ?? "No Selected State");
+                EditorGUILayout.LabelField(currentState);
 
-                DrawCategories ();
-                DrawStates (displayedStates);
+                DrawCategories();
+                DrawStates(displayedStates);
 
-                EditorGUILayout.Space ();
+                EditorGUILayout.Space();
 
-                DrawRuntimeInfo ();
+                DrawRuntimeInfo();
             }
-            EditorGUILayout.EndVertical ();
+            EditorGUILayout.EndVertical();
 
-            if (serializedObject.UpdateIfRequiredOrScript ())
+            if (serializedObject.UpdateIfRequiredOrScript())
             {
-                Repaint ();
+                Repaint();
             }
         }
 
         private void DrawCategories()
         {
-            EditorGUI.BeginChangeCheck ();
+            EditorGUI.BeginChangeCheck();
             {
-                groupIndex = EditorGUILayout.Popup ("State Catergory", groupIndex, GroupNames);
+                groupIndex = EditorGUILayout.Popup("State Catergory", groupIndex, GroupNames);
             }
-            if (EditorGUI.EndChangeCheck ())
+            if (EditorGUI.EndChangeCheck())
             {
-                UpdateDrawnStates ();
+                UpdateDrawnStates();
             }
         }
 
@@ -169,40 +169,40 @@ namespace FSM.Editors
         {
             if (states == null)
             {
-                EditorGUILayout.HelpBox ("Category has no states", MessageType.Error);
+                EditorGUILayout.HelpBox("Category has no states", MessageType.Error);
                 return;
             }
 
-            EditorGUI.BeginChangeCheck ();
+            EditorGUI.BeginChangeCheck();
 
             //int xCount = Mathf.Min (_states.Length, 3);
 
-            stateIndex = GUILayout.SelectionGrid (stateIndex, states, 3);
+            stateIndex = GUILayout.SelectionGrid(stateIndex, states, 3);
 
             if (EditorGUI.EndChangeCheck())
             {
-                UpdateSerializedState ();
+                UpdateSerializedState();
             }
         }
 
         private void DrawRuntimeInfo()
         {
-            EditorGUILayout.LabelField ("Runtime State Info", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Runtime State Info", EditorStyles.boldLabel);
 
             EditorGUI.indentLevel++;
 
-            string currentStateStatus = t.CurrentState == null ? "Null" : t.CurrentState.ToString ();
-            string previousStateStatus = t.PreviousState == null ? "Null" : t.PreviousState.ToString ();
+            string currentStateStatus = t.CurrentState == null ? "Null" : t.CurrentState.ToString();
+            string previousStateStatus = t.PreviousState == null ? "Null" : t.PreviousState.ToString();
 
-            string currentStateLabel = string.Format ("Current State ({0})", currentStateStatus);
-            string previousStateLabel = string.Format ("Previous State ({0})", previousStateStatus);
+            string currentStateLabel = string.Format("Current State ({0})", currentStateStatus);
+            string previousStateLabel = string.Format("Previous State ({0})", previousStateStatus);
 
-            EditorGUI.BeginDisabledGroup (true);
+            EditorGUI.BeginDisabledGroup(true);
 
-            DrawStateData (currentStateLabel, t.CurrentState, ref toggleCurrent);
-            DrawStateData (previousStateLabel, t.PreviousState, ref togglePrevious);
+            DrawStateData(currentStateLabel, t.CurrentState, ref toggleCurrent);
+            DrawStateData(previousStateLabel, t.PreviousState, ref togglePrevious);
 
-            EditorGUI.EndDisabledGroup ();
+            EditorGUI.EndDisabledGroup();
 
             EditorGUI.indentLevel--;
         }
@@ -217,26 +217,26 @@ namespace FSM.Editors
             float age = isNull ? 0f : state.age;
             float fixedAge = isNull ? 0f : state.age;
 
-            toggle = EditorGUILayout.Foldout (toggle, label);
+            toggle = EditorGUILayout.Foldout(toggle, label);
 
             if (toggle)
             {
-                EditorGUILayout.TextField ("State Name", stateName);
+                EditorGUILayout.TextField("State Name", stateName);
 
-                EditorGUILayout.FloatField ("Age", age);
-                EditorGUILayout.FloatField ("Fixed", fixedAge);
+                EditorGUILayout.FloatField("Age", age);
+                EditorGUILayout.FloatField("Fixed", fixedAge);
             }
         }
 
         private void UpdateDrawnStates()
         {
             selectedGroup = GroupNames[groupIndex];
-            displayedStates = DisplayGroups[selectedGroup].Select(t => t.displayName).ToArray ();
+            displayedStates = DisplayGroups[selectedGroup].Select(t => t.displayName).ToArray();
         }
 
         private void UpdateSerializedState()
         {
-            t.SerializedState.SetStateName (GetSelectedState ());
+            t.SerializedState.SetStateName(GetSelectedState());
         }
 
         // Serialized State
@@ -244,7 +244,7 @@ namespace FSM.Editors
         private string GetSelectedState()
         {
             selectedState = displayedStates[stateIndex];
-            return StateNames.FirstOrDefault (state => state.Contains (selectedState));
+            return StateNames.FirstOrDefault(state => state.Contains(selectedState));
         }
 
         private void GetSelectionIndexes()
@@ -254,7 +254,7 @@ namespace FSM.Editors
             int i = 0;
             foreach (KeyValuePair<string, List<StateName>> group in DisplayGroups)
             {
-                int index = group.Value.FindIndex (name => name.fullName == serializedName);
+                int index = group.Value.FindIndex(name => name.fullName == serializedName);
 
                 if (index != -1)
                 {
@@ -271,14 +271,14 @@ namespace FSM.Editors
 
         private string GetStateName(string stateName)
         {
-            int nameIndex = stateName.LastIndexOf ('.');
+            int nameIndex = stateName.LastIndexOf('.');
 
-            stateName = stateName.Substring (nameIndex + 1, stateName.Length - nameIndex - 1);
+            stateName = stateName.Substring(nameIndex + 1, stateName.Length - nameIndex - 1);
 
             // Slight clean up
             if (!stateName.Equals("State"))
             {
-                stateName = stateName.Replace ("State", "");
+                stateName = stateName.Replace("State", "");
             }
 
             return stateName;
@@ -286,12 +286,12 @@ namespace FSM.Editors
 
         private string GetGroupName(string stateName)
         {
-            int nameIndex = stateName.LastIndexOf ('.');
+            int nameIndex = stateName.LastIndexOf('.');
 
-            string category = stateName.Substring (0, nameIndex);
-            int categoryIndex = category.LastIndexOf ('.');
+            string category = stateName.Substring(0, nameIndex);
+            int categoryIndex = category.LastIndexOf('.');
 
-            return stateName.Substring (categoryIndex + 1, category.Length - categoryIndex - 1);
+            return stateName.Substring(categoryIndex + 1, category.Length - categoryIndex - 1);
         }
     }
 }

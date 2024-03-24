@@ -19,7 +19,7 @@ namespace FSM
         {
             if (Application.isPlaying)
             {
-                StateManager.SetStateValues (this);
+                StateManager.SetStateValues(this);
             }
         }
 
@@ -82,7 +82,7 @@ namespace FSM
 
         public static explicit operator State(Type v)
         {
-            throw new NotImplementedException ();
+            throw new NotImplementedException();
         }
     }
 }

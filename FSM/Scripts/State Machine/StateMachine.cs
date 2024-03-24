@@ -22,8 +22,8 @@ namespace FSM
 
         private void OnEnable()
         {
-            m_mainState = m_serializedMainState.CreateStateFromType ();
-            SetState (m_mainState);
+            m_mainState = m_serializedMainState.CreateStateFromType();
+            SetState(m_mainState);
         }
 
         private void Update()
@@ -35,7 +35,7 @@ namespace FSM
 
             if (m_currentState != null)
             {
-                m_currentState.Tick (Time.deltaTime);
+                m_currentState.Tick(Time.deltaTime);
             }
         }
 
@@ -48,7 +48,7 @@ namespace FSM
 
             if (m_currentState != null)
             {
-                m_currentState.FixedTick (Time.fixedDeltaTime);
+                m_currentState.FixedTick(Time.fixedDeltaTime);
             }
         }
 
@@ -61,7 +61,7 @@ namespace FSM
 
             if (m_currentState != null)
             {
-                m_currentState.LateTick (Time.deltaTime);
+                m_currentState.LateTick(Time.deltaTime);
             }
         }
 
@@ -74,7 +74,7 @@ namespace FSM
 
             if (m_currentState != null)
             {
-                m_currentState.DebugTick (Time.deltaTime);
+                m_currentState.DebugTick(Time.deltaTime);
             }
         }
 
@@ -93,21 +93,21 @@ namespace FSM
 
             if (state == null)
             {
-                Debug.LogError ("Cannot set null state");
+                Debug.LogError("Cannot set null state");
                 return;
             }
 
             if (m_currentState != null)
             {
-                m_currentState.OnExit ();
+                m_currentState.OnExit();
             }
 
             m_previousState = m_currentState;
-            
+
             // Update State
             m_currentState = state;
             m_currentState.SetParent(this);
-            m_currentState.OnEnter ();
+            m_currentState.OnEnter();
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace FSM
         /// </summary>
         public void SetToDefault()
         {
-            SetState (m_mainState);
+            SetState(m_mainState);
         }
     }
 }

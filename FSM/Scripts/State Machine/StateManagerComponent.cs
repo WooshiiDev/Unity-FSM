@@ -8,7 +8,7 @@ namespace FSM
 
         private void Awake()
         {
-            manager.OnAwake ();
+            manager.OnAwake();
         }
     }
 }

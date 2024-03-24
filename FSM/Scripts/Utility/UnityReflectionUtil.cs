@@ -10,13 +10,13 @@ public static class UnityReflectionUtil
     {
         string reflectedString = "";
 
-        foreach (MethodInfo method in typeof (T).GetMethods (flags))
+        foreach (MethodInfo method in typeof(T).GetMethods(flags))
         {
             reflectedString = method.Name + "\n";
 
             if (showParameters)
             {
-                ParameterInfo[] parameters = method.GetParameters ();
+                ParameterInfo[] parameters = method.GetParameters();
 
                 if (parameters != null)
                 {
@@ -32,15 +32,15 @@ public static class UnityReflectionUtil
             }
 
             //Write Debug, then clear string
-            Debug.Log (reflectedString);
+            Debug.Log(reflectedString);
         }
     }
 
     public static void ReflectFields<T>()
     {
-        foreach (FieldInfo field in typeof (T).GetRuntimeFields ())
+        foreach (FieldInfo field in typeof(T).GetRuntimeFields())
         {
-            Debug.Log ($"{field.FieldType} {field.Name}");
+            Debug.Log($"{field.FieldType} {field.Name}");
         }
     }
 
@@ -51,11 +51,11 @@ public static class UnityReflectionUtil
         //Assembly assem = type.Assembly;
         if (type == null)
         {
-            Debug.LogError ("Cannot find type of null!");
+            Debug.LogError("Cannot find type of null!");
             return null;
         }
 
-        return type.GetFields (flags);
+        return type.GetFields(flags);
     }
 
     #endregion
@@ -67,11 +67,11 @@ public static class UnityReflectionUtil
         //Assembly assem = type.Assembly;
         if (type == null)
         {
-            Debug.LogError ("Cannot find type of null!");
+            Debug.LogError("Cannot find type of null!");
             return null;
         }
 
-        return type.GetMethods (flags);
+        return type.GetMethods(flags);
     }
 
     #endregion
@@ -84,11 +84,11 @@ public static class UnityReflectionUtil
 
         if (assem == null)
         {
-            Debug.Log ("Cannot find assembly of " + type + "!");
+            Debug.Log("Cannot find assembly of " + type + "!");
             return null;
         }
 
-        return assem.GetTypes ().Where (t => t.IsSubclassOf (type)).ToArray ();
+        return assem.GetTypes().Where(t => t.IsSubclassOf(type)).ToArray();
     }
 
     public static Type[] GetTypesInAssembly(Type type)
@@ -97,11 +97,11 @@ public static class UnityReflectionUtil
 
         if (assem == null)
         {
-            Debug.Log ("Cannot find assembly of " + type + "!");
+            Debug.Log("Cannot find assembly of " + type + "!");
             return null;
         }
 
-        return assem.GetTypes ().Where (t => t.IsAssignableFrom (type) || t.IsSubclassOf (type)).ToArray ();
+        return assem.GetTypes().Where(t => t.IsAssignableFrom(type) || t.IsSubclassOf(type)).ToArray();
     }
 
     #endregion
