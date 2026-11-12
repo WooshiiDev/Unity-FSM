@@ -30,8 +30,6 @@ Rather than handling states through ScriptableObjects or MonoBehaviours, all sta
 
 All public fields that are within the state will be shown and can be edited from the manager. When an instance changes to that state, all set values will be passed over. 
 
-**Use case examples will be soon added to the repository!**
-
 ## Usage
 
 Because of it's extremely light system, there are no transition behaviour or conditions you see in other state machines. It is purely a state only system. On each compile, new created states will be recognized by the state manager, so they can also be edited.
